@@ -4,7 +4,35 @@ public class Card {
     private Color color = Color.valueOf(null); // color of card (RED, GREEN, BLUE, YELLOW, WILD)
     private String title;
 
-    //create constructor
+    /**
+     *Constructor
+     * @param cardColor enum type, color of the card
+     * @param cardID value of card, method for identifying card
+     */
+    public Card(int cardID, Color cardColor) {
+        value = cardID;
+        color = cardColor;
 
+        switch (value) {
+            case 10:
+                title = "Wild";
+                break;
+            case 11:
+                title = "Skip";
+                break;
+            case 12:
+                title = "Skip";
+                break;
+            case 13:
+                title = "Draw 2";
+                break;
+            case 14:
+                title = "Draw 4";
+                break;
+            default:
+                title = "" +value;
+
+        }
+    }
     
 }
