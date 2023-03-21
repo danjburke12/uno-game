@@ -13,6 +13,7 @@ public class Card {
         value = cardID;
         color = cardColor;
 
+        //assign title to card based on number (certain numbers indicate actions, rather than digit values)
         switch (value) {
             case 10:
                 title = "Wild";
@@ -21,12 +22,9 @@ public class Card {
                 title = "Skip";
                 break;
             case 12:
-                title = "Skip";
-                break;
-            case 13:
                 title = "Draw 2";
                 break;
-            case 14:
+            case 13:
                 title = "Draw 4";
                 break;
             default:
@@ -34,5 +32,17 @@ public class Card {
 
         }
     }
-    
+
+    //getters and setters   
+    public int getValue(){
+        return value;
+    } 
+
+    public Color getColor(){
+        return color;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }
