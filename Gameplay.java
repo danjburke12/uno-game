@@ -19,11 +19,9 @@ public class Gameplay {
     public static boolean displayRules(){
         //display rules
         //TODO: add rules output
-        System.out.println("Rules are as follows:");
-        System.out.println("Evey player starts with seven cards.");
-        System.out.println("There are two piles: a draw pile and a discard pile.");
-        System.out.println("Your goal is to get rid of all your cards by playing one card at a time in the discard pile.");
-        System.out.println("You can play a card if it matches the previously played card in either color, number, or action.");
+        System.out.println("Welcome to UNO! Here are the rules!");
+        System.out.println("Evey player starts with seven cards. \n There are two piles: a draw pile and a discard pile.");
+        System.out.println("Your goal is to get rid of all your cards by playing one card at a time in the discard pile. \n You can play a card if it matches the previously played card in either color, number, or action.");
         System.out.println("When you are at one card left, you need to shout \"UNO!\"."); //TODO: Daniel needs to pick which way we are doing UNO
 
         //create Scanner object
