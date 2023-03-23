@@ -24,7 +24,7 @@ public class Game {
     /* getters and setters */
     public static int setPlayerCount(int playerCount) {
         Game.playerCount = playerCount;
-        return playerCount;
+        return Game.playerCount;
     }
 
     public static int getPlayerCount() {

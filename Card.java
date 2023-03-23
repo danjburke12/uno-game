@@ -5,15 +5,17 @@ public class Card {
     private String title;
 
     /**
-     *Constructor
+     * Constructor
+     * 
      * @param cardColor enum type, color of the card
-     * @param cardID value of card, method for identifying card
+     * @param cardID    value of card, method for identifying card
      */
     public Card(int cardID, Color cardColor) {
         value = cardID;
         color = cardColor;
 
-        //assign title to card based on number (certain numbers indicate actions, rather than digit values)
+        // assign title to card based on number (certain numbers indicate actions,
+        // rather than digit values)
         switch (value) {
             case 10:
                 title = "Wild";
@@ -28,17 +30,23 @@ public class Card {
                 title = "Draw 4";
                 break;
             default:
-                title = "" +value;
+                title = "" + value;
 
         }
     }
 
-    //getters and setters   
-    public int getValue(){
-        return value;
-    } 
+    @Override
+    public String toString() {
+        // displays card information
+        return "" + color.toString() + " - " + title;
+    }
 
-    public Color getColor(){
+    /* getters and setters */
+    public int getValue() {
+        return value;
+    }
+
+    public Color getColor() {
         return color;
     }
 
