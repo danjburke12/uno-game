@@ -4,8 +4,11 @@ public class Gameplay {
     public static void main(String[] args) {
         //display gameplay and get user confirmation
         if (displayRules()) {
+            System.out.println("Happy playing!");
             //run game setup
             gameSetup();
+        }else{
+            System.out.println("Goodbye");
         }
     }
 
@@ -16,8 +19,13 @@ public class Gameplay {
     public static boolean displayRules(){
         //display rules
         //TODO: add rules output
-        System.out.println(/*TODO: add rules*/);
-        
+        System.out.println("Rules are as follows:");
+        System.out.println("Evey player starts with seven cards.");
+        System.out.println("There are two piles: a draw pile and a discard pile.");
+        System.out.println("Your goal is to get rid of all your cards by playing one card at a time in the discard pile.");
+        System.out.println("You can play a card if it matches the previously played card in either color, number, or action.");
+        System.out.println("When you are at one card left, you need to shout \"UNO!\"."); //TODO: Daniel needs to pick which way we are doing UNO
+
         //create Scanner object
         Scanner userInput = new Scanner(System.in);
         System.out.println("Do you accept these rules?");
