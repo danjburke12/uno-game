@@ -9,8 +9,8 @@ public class Deck {
     public static final int TOTAL_NUMBER_OF_CARDS = 100;
     // 4 x Zero cards, 8 x 1-9 cards
 
-    ArrayList<Card> discardPile = new ArrayList<>(); // cards discarded after play
-    ArrayList<Card> playablePile = new ArrayList<>(TOTAL_NUMBER_OF_CARDS); // pile to draw from
+    public ArrayList<Card> discardPile = new ArrayList<>(); // cards discarded after play
+    public ArrayList<Card> playablePile = new ArrayList<>(TOTAL_NUMBER_OF_CARDS); // pile to draw from
 
     // constructor - creates new deck instance
     public Deck() {
