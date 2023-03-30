@@ -75,11 +75,13 @@ public class Gameplay {
 
         // create discard and playing pile
         deckInstance = new Deck();
-        Deck.initializeDeck(deckInstance.playablePile);
+        deckInstance.initializeDeck(deckInstance.playablePile);
+        //shuffle deck
+        deckInstance.setPlayablePile(deckInstance.shuffle(deckInstance.getPlayableDeck()));
 
+        // get number of players
         do {
-            // get number of players
-            System.out.println("How many people will be playing (2-10 allowed): ");
+            System.out.println("How many people will be playing? (2-10 allowed): ");
             input = userInput.nextInt();
             mainGame.setPlayerCount(input);
             players = new Player[mainGame.getPlayerCount()];
@@ -88,16 +90,28 @@ public class Gameplay {
         // create players and deal
         for (int i = 0; i < mainGame.getPlayerCount(); i++) {
             // create card hand for player
-            ArrayList<Card> tempHand = new ArrayList(7);
-            for (int j = 0; j < 7; j++) {
+            ArrayList<Card> tempHand = new ArrayList<>(7);
+            
+            /*add "shout UNO" card to deck
+            * this card always stays in deck
+            * can only be played when one card (two counting this one) are left
+            */
+            tempHand.set(0, new DeclareUno());
+
+            //fill hand with 7 cards
+            for (int j = 1; j < 8; j++) {
                 tempHand.set(j, deckInstance.drawCard(deckInstance.playablePile, 0));
             }
+
             // get name of player
             System.out.println("Please enter player " + (i + 1) + "'s name: ");
             // create new player instance
             players[i] = new Player(userInput.next(), tempHand);
         }
+        userInput.close();
     }
+
+    /* getters */
     public static Game getMainGame() {
         return mainGame;
     }

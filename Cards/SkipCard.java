@@ -7,8 +7,8 @@ public class SkipCard extends Card {
      * 
      * @param cardColor enum type, color of the card
      */
-    public SkipCard(String title) {
-        super(Colors.WILD, title);
+    public SkipCard(Colors color) {
+        super(color, "Skip");
     }
 
     @Override

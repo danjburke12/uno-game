@@ -8,7 +8,7 @@ public class Draw2 extends Card {
      * @param cardColor enum type, color of the card
      */
     public Draw2(Colors cardColor) {
-        super(cardColor);
+        super(cardColor, "Draw 2");
     }
 
     @Override

@@ -7,9 +7,11 @@ import Cards.*;
 public class Deck {
     public static final int NUMBER_OF_WILD_CARDS = 4;
     public static final int NUMBER_OF_DRAW2_CARDS = 8;
-    public static final int NUMBER_OF_DRAW4_CARDS = 4;
+    public static final int NUMBER_OF_WILDDRAW4_CARDS = 4;
     public static final int NUMBER_OF_SKIP_CARDS = 8;
+    public static final int NUMBER_OF_REVERSE_CARDS = 8;
     public static final int TOTAL_NUMBER_OF_CARDS = 100;
+
     // 4 x Zero cards, 8 x 1-9 cards
 
     public ArrayList<Card> discardPile = new ArrayList<>(); // cards discarded after play
@@ -46,121 +48,104 @@ public class Deck {
     }
 
     // initialize deck: add neccessary cards
-    public static void initializeDeck(ArrayList<Card> deck) {
+    public void initializeDeck(ArrayList<Card> deck) {
+        Colors[] tempColors = {Colors.RED, Colors.YELLOW, Colors.GREEN, Colors.BLUE};
+
         // create zero cards
-       /*  deck.add(new Card(0, Colors.RED));
-        deck.add(new Card(0, Colors.YELLOW));
-        deck.add(new Card(0, Colors.GREEN));
-        deck.add(new Card(0, Colors.BLUE));
-        // create one cards
-        deck.add(new Card(1, Colors.RED));
-        deck.add(new Card(1, Colors.YELLOW));
-        deck.add(new Card(1, Colors.GREEN));
-        deck.add(new Card(1, Colors.BLUE));
-        deck.add(new Card(1, Colors.RED));
-        deck.add(new Card(1, Colors.YELLOW));
-        deck.add(new Card(1, Colors.GREEN));
-        deck.add(new Card(1, Colors.BLUE));
-        // create two cards
-        deck.add(new Card(2, Colors.RED));
-        deck.add(new Card(2, Colors.YELLOW));
-        deck.add(new Card(2, Colors.GREEN));
-        deck.add(new Card(2, Colors.BLUE));
-        deck.add(new Card(2, Colors.RED));
-        deck.add(new Card(2, Colors.YELLOW));
-        deck.add(new Card(2, Colors.GREEN));
-        deck.add(new Card(2, Colors.BLUE));
-        // create three cards
-        deck.add(new Card(3, Colors.RED));
-        deck.add(new Card(3, Colors.YELLOW));
-        deck.add(new Card(3, Colors.GREEN));
-        deck.add(new Card(3, Colors.BLUE));
-        deck.add(new Card(3, Colors.RED));
-        deck.add(new Card(3, Colors.YELLOW));
-        deck.add(new Card(3, Colors.GREEN));
-        deck.add(new Card(3, Colors.BLUE));
-        // create four cards
-        deck.add(new Card(4, Colors.RED));
-        deck.add(new Card(4, Colors.YELLOW));
-        deck.add(new Card(4, Colors.GREEN));
-        deck.add(new Card(4, Colors.BLUE));
-        deck.add(new Card(4, Colors.RED));
-        deck.add(new Card(4, Colors.YELLOW));
-        deck.add(new Card(4, Colors.GREEN));
-        deck.add(new Card(4, Colors.BLUE));
-        // create five cards
-        deck.add(new Card(5, Colors.RED));
-        deck.add(new Card(5, Colors.YELLOW));
-        deck.add(new Card(5, Colors.GREEN));
-        deck.add(new Card(5, Colors.BLUE));
-        deck.add(new Card(5, Colors.RED));
-        deck.add(new Card(5, Colors.YELLOW));
-        deck.add(new Card(5, Colors.GREEN));
-        deck.add(new Card(5, Colors.BLUE));
-        // create six cards
-        deck.add(new Card(6, Colors.RED));
-        deck.add(new Card(6, Colors.YELLOW));
-        deck.add(new Card(6, Colors.GREEN));
-        deck.add(new Card(6, Colors.BLUE));
-        deck.add(new Card(6, Colors.RED));
-        deck.add(new Card(6, Colors.YELLOW));
-        deck.add(new Card(6, Colors.GREEN));
-        deck.add(new Card(6, Colors.BLUE));
-        // create seven cards
-        deck.add(new Card(7, Colors.RED));
-        deck.add(new Card(7, Colors.YELLOW));
-        deck.add(new Card(7, Colors.GREEN));
-        deck.add(new Card(7, Colors.BLUE));
-        deck.add(new Card(7, Colors.RED));
-        deck.add(new Card(7, Colors.YELLOW));
-        deck.add(new Card(7, Colors.GREEN));
-        deck.add(new Card(7, Colors.BLUE));
-        // create eight cards
-        deck.add(new Card(8, Colors.RED));
-        deck.add(new Card(8, Colors.YELLOW));
-        deck.add(new Card(8, Colors.GREEN));
-        deck.add(new Card(8, Colors.BLUE));
-        deck.add(new Card(8, Colors.RED));
-        deck.add(new Card(8, Colors.YELLOW));
-        deck.add(new Card(8, Colors.GREEN));
-        deck.add(new Card(8, Colors.BLUE));
-        // create nine cards
-        deck.add(new Card(9, Colors.RED));
-        deck.add(new Card(9, Colors.YELLOW));
-        deck.add(new Card(9, Colors.GREEN));
-        deck.add(new Card(9, Colors.BLUE));
-        deck.add(new Card(9, Colors.RED));
-        deck.add(new Card(9, Colors.YELLOW));
-        deck.add(new Card(9, Colors.GREEN));
-        deck.add(new Card(9, Colors.BLUE));
-        // create wild cards
-        for (int i = 0; i < NUMBER_OF_WILD_CARDS; i++) {
-            deck.add(new Card(10, Colors.WILD));
+        for (Colors c : tempColors) {
+            deck.add(new NumberCard(c, "0"));
         }
-        // create skip cards
-        deck.add(new Card(11, Colors.RED));
-        deck.add(new Card(11, Colors.YELLOW));
-        deck.add(new Card(11, Colors.GREEN));
-        deck.add(new Card(11, Colors.BLUE));
-        deck.add(new Card(11, Colors.RED));
-        deck.add(new Card(11, Colors.YELLOW));
-        deck.add(new Card(11, Colors.GREEN));
-        deck.add(new Card(11, Colors.BLUE));
-        // create Draw 2 cards
-        deck.add(new Card(12, Colors.RED));
-        deck.add(new Card(12, Colors.YELLOW));
-        deck.add(new Card(12, Colors.GREEN));
-        deck.add(new Card(12, Colors.BLUE));
-        deck.add(new Card(12, Colors.RED));
-        deck.add(new Card(12, Colors.YELLOW));
-        deck.add(new Card(12, Colors.GREEN));
-        deck.add(new Card(12, Colors.BLUE));
-        // create Draw 4 cards
-        deck.add(new Card(13, Colors.RED));
-        deck.add(new Card(13, Colors.YELLOW));
-        deck.add(new Card(13, Colors.GREEN));
-        deck.add(new Card(13, Colors.BLUE));
-        */
+
+        //create one cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "1"));
+            }
+        }
+
+        //create two cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "2"));
+            }
+        }
+
+        //create three cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "3"));
+            }
+        }    
+        
+        //create four cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "4"));
+            }
+        } 
+
+        //create five cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "5"));
+            }
+        } 
+
+        //create six cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "6"));
+            }
+        } 
+
+        //create seven cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "7"));
+            }
+        } 
+
+        //create eight cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "8"));
+            }
+        } 
+
+        //create nine cards
+        for (int i = 0; i < 2; i++){
+            for (Colors c : tempColors) {
+                deck.add(new NumberCard(c, "9"));
+            }
+        } 
+
+        //create skip cards
+        for (int i = 0; i < (NUMBER_OF_SKIP_CARDS / 4); i++){
+            for (Colors c : tempColors) {
+                deck.add(new SkipCard(c));
+            }
+        } 
+
+        //TODO: Create reverse cards
+
+        //create draw2 cards
+        for (int i = 0; i < (NUMBER_OF_DRAW2_CARDS / 4); i++){
+            for (Colors c : tempColors) {
+                deck.add(new Draw2(c));
+            }
+        }
+
+        //create wild cards
+        for (int i = 0; i < 4; i++) {
+            deck.add(new WildCard());
+        }
+
+        //create wild draw4 cards
+        for (int i = 0; i < 4; i++) {
+            deck.add(new WildDraw4());
+        }
+
+       
     }
 
     /**
@@ -169,7 +154,7 @@ public class Deck {
      * @param deckToBeShuffled deck to be shuffled
      * @return shuffled deck sorted randomnly
      */
-    public static ArrayList<Card> shuffle(ArrayList<Card> deckToBeShuffled) {
+    public ArrayList<Card> shuffle(ArrayList<Card> deckToBeShuffled) {
         // create Random object
         Random rn = new Random();
         // create empty array to put shuffled deck into
@@ -193,5 +178,14 @@ public class Deck {
 
     public ArrayList<Card> getPlayableDeck() {
         return playablePile;
+    }
+
+    //setters
+    public void setPlayablePile(ArrayList<Card> playablePile) {
+        this.playablePile = playablePile;
+    }
+
+    public void setDiscardPile(ArrayList<Card> discardPile) {
+        this.discardPile = discardPile;
     }
 }
