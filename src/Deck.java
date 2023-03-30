@@ -1,5 +1,6 @@
 package src;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import Cards.*;
@@ -19,9 +20,6 @@ public class Deck {
 
     // constructor - creates new deck instance
     public Deck() {
-        // add cards to playableDeck
-        initializeDeck(playablePile);
-
     }
 
     /**
@@ -34,7 +32,7 @@ public class Deck {
      */
     public Card drawCard(ArrayList<Card> pile, int index) {
         if (pile.size() > 0) {
-            return pile.get(index);
+            return pile.remove(index);
         } else {
             // move discard pile into playable pile
             discardPile = shuffle(discardPile);
@@ -48,7 +46,9 @@ public class Deck {
     }
 
     // initialize deck: add neccessary cards
-    public void initializeDeck(ArrayList<Card> deck) {
+    public ArrayList<Card> initializeDeck() {
+        //create temporary deck
+        ArrayList<Card> deck = new ArrayList<>();
         Colors[] tempColors = {Colors.RED, Colors.YELLOW, Colors.GREEN, Colors.BLUE};
 
         // create zero cards
@@ -144,8 +144,8 @@ public class Deck {
         for (int i = 0; i < 4; i++) {
             deck.add(new WildDraw4());
         }
-
-       
+    
+        return deck;
     }
 
     /**
@@ -158,17 +158,17 @@ public class Deck {
         // create Random object
         Random rn = new Random();
         // create empty array to put shuffled deck into
-        ArrayList<Card> shuffledDeck = new ArrayList<>(deckToBeShuffled.size());
-        for (int i = 0; i < shuffledDeck.size(); i++) {
-            int index = rn.nextInt(shuffledDeck.size());
+        Card[] shuffledDeck = new Card[deckToBeShuffled.size()];
+        for (int i = 0; i < deckToBeShuffled.size(); i++) {
+            int index = rn.nextInt(deckToBeShuffled.size());
             // fill spot with card if empty
-            while (shuffledDeck.get(index) == null) {
+            while (shuffledDeck[index] == null) {
                 // remove card from deck, add to shuffled deck
-                shuffledDeck.set(index, deckToBeShuffled.remove(0));
-                rn.nextInt(shuffledDeck.size());
+                shuffledDeck[index] = deckToBeShuffled.remove(0);
+                rn.nextInt(shuffledDeck.length);
             }
         }
-        return shuffledDeck;
+        return new ArrayList<Card>(Arrays.asList(shuffledDeck));
     }
 
     // getters
@@ -176,7 +176,7 @@ public class Deck {
         return discardPile;
     }
 
-    public ArrayList<Card> getPlayableDeck() {
+    public ArrayList<Card> getPlayablePile() {
         return playablePile;
     }
 
