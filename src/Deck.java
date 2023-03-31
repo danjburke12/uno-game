@@ -154,22 +154,28 @@ public class Deck {
      * @param deckToBeShuffled deck to be shuffled
      * @return shuffled deck sorted randomnly
      */
-    public ArrayList<Card> shuffle(ArrayList<Card> deckToBeShuffled) {
+    public void shuffle(ArrayList<Card> deckToBeShuffled) {
         // create Random object
         Random rn = new Random();
-        // create empty array to put shuffled deck into
-        Card[] shuffledDeck = new Card[deckToBeShuffled.size()];
         for (int i = 0; i < deckToBeShuffled.size(); i++) {
-            int index = rn.nextInt(deckToBeShuffled.size());
+            /* int index = rn.nextInt(deckToBeShuffled.size());
             // fill spot with card if empty
             while (shuffledDeck[index] == null) {
                 // remove card from deck, add to shuffled deck
                 shuffledDeck[index] = deckToBeShuffled.remove(0);
                 rn.nextInt(shuffledDeck.length);
-            }
+            } */
+
+            int c = rn.nextInt(deckToBeShuffled.size());
+            swap(deckToBeShuffled, i, c);
         }
-        return new ArrayList<Card>(Arrays.asList(shuffledDeck));
     }
+
+    public static void swap(ArrayList<Card> array, int a, int b){
+        Card temp = array.get(a);
+        array.set(a, array.get(b));
+        array.set(b, temp);
+    } 
 
     // getters
     public ArrayList<Card> getDiscardPile() {

@@ -6,7 +6,7 @@ public abstract class Card {
      * all card types are subclasses of this class
      */
 
-    private Colors color = Colors.valueOf(null); // color of card (RED, GREEN, BLUE, YELLOW, WILD)
+    private Colors color; // color of card (RED, GREEN, BLUE, YELLOW, WILD)
     private String title;
 
     /**
@@ -14,8 +14,9 @@ public abstract class Card {
      * 
      * @param cardColor enum type, color of the card
      */
-    public Card(Colors cardColor) {
-        color = cardColor;
+    public Card(Colors cardColor, String title) {
+        this.color = cardColor;
+        this.title = title;
     }
 
     public Colors getColor() {
@@ -26,6 +27,12 @@ public abstract class Card {
         return title;
     }
 
+    /**
+     * Performs the designated/neccessary action(s) for a card
+     * 
+     * @param currentPlayer current player
+     * @return next player
+     */
     public abstract int doAction(int currentPlayer);
 
     /**

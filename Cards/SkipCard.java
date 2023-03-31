@@ -11,6 +11,12 @@ public class SkipCard extends Card {
         super(color, "Skip");
     }
 
+    /**
+     * Skips next player
+     * @param currentPlayer : takes in current player
+     * @return return player 2 players from current player
+     */
+
     @Override
     public int doAction(int currentPlayer) {
         // set next player, if this is last player, return to player one

@@ -8,9 +8,10 @@ public class Player {
     private ArrayList<Card> playerHand = new ArrayList<>(7);
     private String name;
     private boolean hasDeclaredUNO = false;
+    private int arrayPosition;
 
     // constructor
-    public Player(String name, ArrayList<Card> startingHand) {
+    public Player(String name, ArrayList<Card> startingHand, int arrayPosition) {
         this.name = name;
         playerHand = startingHand;
     }
@@ -30,5 +31,13 @@ public class Player {
     public boolean setHasDeclaredUno(boolean declaredUNO) {
         this.hasDeclaredUNO = declaredUNO;
         return hasDeclaredUNO;
+    }
+
+    public int getArrayPosition() {
+        return arrayPosition;
+    }
+
+    public void setArrayPosition(int arrayPosition) {
+        this.arrayPosition = arrayPosition;
     }
 }

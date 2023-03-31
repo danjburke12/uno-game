@@ -16,5 +16,17 @@ public class DeclareUno extends Card{
         // return next player to play
         return (currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++);
     }  
+
+    /**
+     * toString method
+     * Displays SHOUT UNO
+     * @return formatted String for card
+     */
+    @Override
+    public String toString() {
+        return "SHOUT UNO";
+    }
 }
+
+
 
