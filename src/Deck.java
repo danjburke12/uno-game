@@ -35,7 +35,7 @@ public class Deck {
             return pile.remove(index);
         } else {
             // move discard pile into playable pile
-            discardPile = shuffle(discardPile);
+            shuffle(discardPile);
             int size = discardPile.size();
             for (int i = 0; i < discardPile.size(); i++) {
                 pile.set(i, discardPile.remove(size - i));
@@ -126,7 +126,12 @@ public class Deck {
             }
         } 
 
-        //TODO: Create reverse cards
+        //create reverse cards
+        for (int i = 0; i < (NUMBER_OF_REVERSE_CARDS / 4); i++){
+            for (Colors c : tempColors) {
+                deck.add(new ReverseCard(c));
+            }
+        }
 
         //create draw2 cards
         for (int i = 0; i < (NUMBER_OF_DRAW2_CARDS / 4); i++){

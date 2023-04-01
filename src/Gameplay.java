@@ -10,6 +10,7 @@ public class Gameplay {
     static int[] playerScores;
     static Deck deckInstance = new Deck();
     static boolean hasWinner = false;
+    static boolean gameDirection = true;
 
     public static void main(String[] args) {
         // display gameplay and get user confirmation
@@ -151,5 +152,13 @@ public class Gameplay {
     }
     public static Player[] getPlayers() {
         return players;
+    }
+    public static boolean getGameDirection() {
+        return gameDirection;
+    }
+
+    public static boolean toggleGameDirection() {
+        gameDirection = !gameDirection;
+        return gameDirection;
     }
 }

@@ -13,14 +13,28 @@ public class WildDraw4 extends Card {
     @Override
     public int doAction(int currentPlayer) {
         // set next player, if this is last player, return to player one
-        int nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+        int nextPlayer;
+
+        if (Gameplay.getGameDirection()) {
+            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+        }else{
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : currentPlayer--;
+        }
+
         for (int i = 0; i < 4; i++) {
             Gameplay.getPlayers()[nextPlayer].getPlayerHand()
                     .add(Gameplay.getDeckInstance().drawCard(Gameplay.getDeckInstance().playablePile, 0));
         }
 
+        //skip player
+        if (Gameplay.getGameDirection()) {
+            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+        }else{
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : currentPlayer--;
+        }
+
         // return next player to play
-        return nextPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+        return nextPlayer;
     }
 
     @Override

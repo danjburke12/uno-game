@@ -14,7 +14,13 @@ public class DeclareUno extends Card{
         System.out.println("UNO!" +currentPlayer +" only has one card left!");
      
         // return next player to play
-        return (currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++);
+        int nextPlayer;
+        if (Gameplay.getGameDirection()) {
+            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+        }else{
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : currentPlayer--;
+        }
+        return nextPlayer;
     }  
 
     /**
