@@ -23,6 +23,15 @@ public abstract class Card {
         return color;
     }
 
+    /**
+     * Only to be used for Wild cards
+     * Changes card color to chosen color
+     * @param color
+     */
+    public void setColor(Colors color) {
+        this.color = color;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -163,14 +163,7 @@ public class Deck {
         // create Random object
         Random rn = new Random();
         for (int i = 0; i < deckToBeShuffled.size(); i++) {
-            /* int index = rn.nextInt(deckToBeShuffled.size());
-            // fill spot with card if empty
-            while (shuffledDeck[index] == null) {
-                // remove card from deck, add to shuffled deck
-                shuffledDeck[index] = deckToBeShuffled.remove(0);
-                rn.nextInt(shuffledDeck.length);
-            } */
-
+            //shuffle deck
             int c = rn.nextInt(deckToBeShuffled.size());
             swap(deckToBeShuffled, i, c);
         }
@@ -178,6 +171,12 @@ public class Deck {
 
     public static void swap(ArrayList<Card> array, int a, int b){
         Card temp = array.get(a);
+        
+        //reset wild cards to wild
+        if (temp.getTitle() == "Wild" && temp.getTitle() == "Wild Draw 4") {
+            temp.setColor(Colors.WILD);
+        }
+        
         array.set(a, array.get(b));
         array.set(b, temp);
     } 
