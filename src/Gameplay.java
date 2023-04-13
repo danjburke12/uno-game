@@ -12,10 +12,10 @@ public class Gameplay {
     static Deck deckInstance = new Deck();
     static boolean hasWinner = false;
     static boolean gameDirection = true;
-    static int lowestPossibleIndex = 1; //either 1 or 0 (0 if uno can be declared)
     static int highestPossibleIndex = 7;
     static Player currentPlayer;
-
+    static Card nextCard;
+    static Card tempCard;
 
     public static void main(String[] args) {
         // display gameplay and get user confirmation
@@ -29,76 +29,109 @@ public class Gameplay {
 
             // display first card
             int x = 0;
-            Card tempCard;
             do {
                 // draw card from main pile, place in discard pile (face up)
                 deckInstance.discardPile.add(deckInstance.drawCard(deckInstance.playablePile, 0));
-                tempCard = deckInstance.discardPile.get(x);
+                nextCard = deckInstance.discardPile.get(x);
                 x++;
-            } while (tempCard.getColor() == Colors.WILD); // ensures first card is not a wild card
-            System.out.println("**The first card is a " + tempCard.toString() + ".**");
+            } while (nextCard.getColor() == Colors.WILD || nextCard.getTitle() == "Skip"
+                    || nextCard.getTitle() == "Reverse" || nextCard.getTitle() == "Draw 2"); // ensures first card is
+                                                                                             // not a wild card
+            System.out.println("**The first card is a " + nextCard.toString() + ".**");
 
             // play game
-            playRound(tempCard);
+            playRound(nextCard);
         } else {
             System.out.println("Goodbye");
         }
     }
 
-    public static void playRound(Card tempCard) {
+    public static void playRound(Card nextCard) {
         // loop through each player
         currentPlayer = players[0];
         while (!hasWinner) {
             getBorderValues(currentPlayer);
             // display cards that can be played
-            System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play: ");
-            for (int c = lowestPossibleIndex; c < highestPossibleIndex; c++) {
-                // display card
-                System.out.print(" * [" + c + "] " + currentPlayer.getPlayerHand().get(c).toString());
+
+            if (nextCard.getColor().toString().contains("Wild")) {
+                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must match " +nextCard.toString() +" ]: ");
+            }else{
+                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must match " +nextCard.toString() +" ]: ");
             }
+            for (int c = 0; c < highestPossibleIndex; c++) {
+                // display card
+                System.out.print("* [" + c + "] " + currentPlayer.getPlayerHand().get(c).toString() +" ");
+            }
+
             // return line
             System.out.println();
 
             /* get card chosen and check validity */
             Scanner sc = new Scanner(System.in);
-            int chosenCardIndex;
+            int chosenCardIndex = 1; // default value
+            boolean go = true; //value for determining if input is invalid
 
-            //check validity
+            // check validity
+            while (go) {
+                chosenCardIndex = sc.nextInt();
+                switch (checkValidity(chosenCardIndex, nextCard)) {
+                    // if matches and can be played
+                    case COMPATABLE:
+                        tempCard = players[currentPlayer.getArrayPosition()].getPlayerHand().get(chosenCardIndex); //checks if card is draw, if it is, don't change nextCard
+                        if (tempCard.getTitle() != "DRAW A CARD") {
+                            nextCard = tempCard;
+                        }
+                        System.out.println("**" + currentPlayer.getName() + " chose " + tempCard.toString() + ".**");
+                        go = false;
+                        break;
 
+                    // if card cannot be played (doesn't match in color/title etc)
+                    case VALIDINPUT:
+                        System.out.println("That card cannot be played.");
+                        if (nextCard.getColor() == Colors.WILD) {
+                            System.out.println("Please pick a card that is " + nextCard.getColor().toString() + ".");
+                        } else {
+                            System.out.println("Please pick a card that is either a " + nextCard.getTitle()
+                                + " or is a " + nextCard.getColor().toString() + ".");
+                        }
+                        go = true;
+                        break;
 
-
-
-
-            do {
-            chosenCardIndex = sc.nextInt();
-            if (getBorderValues(currentPlayer, chosenCardIndex))
-                System.out.println();
-
-            }while (getBorderValues(currentPlayer, chosenCardIndex));                    
-
-                
-                
-                    System.out.println("That is not an option, please choose a number between 0-"
-                        + (players[currentPlayer.getArrayPosition()].getPlayerHand().size() - 1));
-                    //check to see if number is in deck
-                //check to see if matches in number/title/action or color
-            // move on, check if card played was a skip, +2 etc
-            if (chosenCardIndex != 0) {
-                //TODO: check if card can be played (is valid)
-                
-                //take card from player's hand, add to discard pile
-                deckInstance.discardPile.add(0, deckInstance.drawCard(players[currentPlayer.getArrayPosition()].getPlayerHand(), chosenCardIndex));
-                
-                /** run card operation, assign next player
-                 * .doAction runs card's actions (draws 2, skips, reverses, plays etc.)
-                 * returns next player, assigns to currentPlayer
-                 */
-                currentPlayer = players[deckInstance.discardPile.get(0).doAction(currentPlayer.getArrayPosition())];
-
-            }else {
-                //TODO: add support for DECLARE UNO option
+                    // if card number is not an option
+                    case INVALID:
+                        System.out.println("" + currentPlayer.getName() + ", that's not a valid choice.");
+                        System.out.println("Please pick a number between 0 & "
+                                + highestPossibleIndex + ":");
+                        go = true;
+                        break;
+                }
             }
+
+            // take card from user, add to pile
+            switch (tempCard.getTitle()) {
+                case "Forgot 'UNO'":
+                    // run process without discarding
+                    currentPlayer = players[nextCard.doAction(currentPlayer.getArrayPosition())];
+                    break;
+
+                case "DRAW A CARD":
+                    // add replacement Draw Card
+                    currentPlayer = players[tempCard.doAction(currentPlayer.getArrayPosition())];
+                    break;
+
+                default:
+                    // run card action and discard card
+                    Gameplay.getDeckInstance().getDiscardPile().add(0,
+                            players[currentPlayer.getArrayPosition()].getPlayerHand().remove(chosenCardIndex));
+                    // get next player
+                    currentPlayer = players[Gameplay.getDeckInstance().getDiscardPile().get(0)
+                            .doAction(currentPlayer.getArrayPosition())];
+                    break;
+
+            }
+
         }
+
     }
 
     /**
@@ -114,11 +147,13 @@ public class Gameplay {
                 "*Every player starts with seven cards. \n*There are two piles: a draw pile and a discard pile.");
         System.out.println(
                 "*Your goal is to get rid of all your cards by playing one card at a time in the discard pile. \n*You can play a card if it matches the previously played card in either color, number, or action.");
-        System.out.println("*When you are at one card left, shout \"UNO!\", otherwise you must draw another card.");
+        System.out.println(
+                "*When you are at one card left, shout \"UNO!\" \n*If you forget and another player catches you, you must draw a card.");
+        System.out.println("*(To do this, the next player will select *[0] 'UNO' Violation*.)");
         // create Scanner object
         Scanner userInput = new Scanner(System.in);
         System.out.println("****************");
-        //ask user if they accept rules
+        // ask user if they accept rules
         System.out.println("Do you accept these rules?");
         System.out.println("Type any key (+ enter) to continue or 'QUIT' to exit the game");
 
@@ -161,11 +196,18 @@ public class Gameplay {
             ArrayList<Card> tempHand = new ArrayList<>();
 
             /*
-             * add "shout UNO" card to deck
+             * add "forgot UNO" card to deck
              * this card always stays in deck
-             * can only be played when one card (two counting this one) are left
+             * is played as a first card, then player picks another to play
              */
-            tempHand.add(new DeclareUno());
+            tempHand.add(0, new ForgotUNO());
+            /**
+             * add DRAW A CARD card to deck
+             * this card also always stays in deck
+             * can be played at any point,
+             * also used when player forgets to shout UNO
+             */
+            tempHand.add(1, new Draw1());
 
             // fill hand with 7 cards
             for (int j = 1; j < 8; j++) {
@@ -183,28 +225,32 @@ public class Gameplay {
     /**
      * 
      * @return Validity state
-     * @param index number input by user
+     * @param index       number input by user
      * @param currentCard card to be played on (on top of deck)
      */
     public static Validity checkValidity(int index, Card currentCard) {
         Validity validityState;
-        //check to see if index entered is a valid choice
-        if (index >= lowestPossibleIndex && index <= highestPossibleIndex){
+        // check to see if index entered is a valid choice
+        if (index >= 0 && index <= highestPossibleIndex) {
             validityState = Validity.VALIDINPUT;
 
-            //if is valid, check to see if compatable with card (number/title/color)
-            if ((players[currentPlayer.getArrayPosition()].getPlayerHand().get(index).getColor() == currentCard.getColor()) || players[currentPlayer.getArrayPosition()].getPlayerHand().get(index).getTitle() == currentCard.getTitle()) {
+            // if is valid, check to see if compatable with card (number/title/color)
+            if ((players[currentPlayer.getArrayPosition()].getPlayerHand().get(index)
+                    .getColor() == (currentCard.getColor())
+                    || (players[currentPlayer.getArrayPosition()].getPlayerHand().get(index).getColor() == Colors.WILD))
+                    || players[currentPlayer.getArrayPosition()].getPlayerHand().get(index).getTitle() == currentCard
+                            .getTitle()) {
                 validityState = Validity.COMPATABLE;
             }
+        } else {
+            validityState = Validity.INVALID;
         }
-
 
         return validityState;
     }
 
     public static void getBorderValues(Player currentPlayer) {
-        highestPossibleIndex = currentPlayer.getPlayerHand().size(); //stores the number of cards in the hand
-        lowestPossibleIndex = currentPlayer.getPlayerHand().size() == 1 ? 0 : 1; //stores one if uno cannot be declared, 0 if it can (lets DECLARE UNO be displayed)
+        highestPossibleIndex = currentPlayer.getPlayerHand().size(); // stores the number of cards in the hand
     }
 
     /* getters */
@@ -234,8 +280,8 @@ public class Gameplay {
     }
 
     enum Validity {
-        COMPATABLE, //number chosen is valid and card is playable
-        VALIDINPUT, //number chosen is valid, but card cannot be played
-        INVALID //invalid choice
+        COMPATABLE, // number chosen is valid and card is playable
+        VALIDINPUT, // number chosen is valid, but card cannot be played
+        INVALID, // invalid choice
     }
 }

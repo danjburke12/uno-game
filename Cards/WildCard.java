@@ -15,15 +15,14 @@ public class WildCard extends Card {
 
     @Override
     public int doAction(int currentPlayer) {
-        // set next player, if this is last player, return to player one
         Scanner sc = new Scanner(System.in);
         //get new color
-        System.out.println("What color would you like: (1) Red, (2) Yellow, (3) Green, (4) Blue");
+        System.out.println("What color would you like: [1] Red, [2] Yellow, [3] Green, [4] Blue");
         int userChoice;
         do {
             System.out.println("Please choose a number (1-4)");
             userChoice = sc.nextInt();
-        }while(userChoice <= 4 && userChoice >= 1);
+        }while(userChoice >= 4 && userChoice <= 1);
 
         Colors chosenColor;
         switch (userChoice) {
@@ -44,14 +43,16 @@ public class WildCard extends Card {
                 break;
         }
 
+        //display color
         System.out.println("The color chosen is " +chosenColor.toString());
         this.setColor(chosenColor);
 
+        //set nextplayer
         int nextPlayer;
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : currentPlayer--;
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
         // return next player to play
         return nextPlayer;

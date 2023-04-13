@@ -24,9 +24,9 @@ public class ReverseCard extends Card{
 
         // set next player, if this is last player, return to player one
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : currentPlayer--;
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
         // return next player to play
         return (nextPlayer);

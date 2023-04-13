@@ -1,4 +1,8 @@
 package Cards;
+import java.util.Scanner;
+
+import java.util.Scanner;
+
 import src.*;
 
 public class WildDraw4 extends Card {
@@ -12,13 +16,45 @@ public class WildDraw4 extends Card {
 
     @Override
     public int doAction(int currentPlayer) {
+        Scanner sc = new Scanner(System.in);
+        //get new color
+        System.out.println("What color would you like: [1] Red, [2] Yellow, [3] Green, [4] Blue");
+        int userChoice;
+        do {
+            System.out.println("Please choose a number (1-4)");
+            userChoice = sc.nextInt();
+        }while(userChoice >= 4 && userChoice <= 1);
+
+        Colors chosenColor;
+        switch (userChoice) {
+            case 1:
+                chosenColor = Colors.RED;
+                break;
+            case 2:
+                chosenColor = Colors.YELLOW;
+                break;
+            case 3:
+                chosenColor = Colors.GREEN;
+                break;
+            case 4:
+                chosenColor = Colors.BLUE;
+                break;
+            default:
+                chosenColor = Colors.RED;
+                break;
+        }
+
+        //display color
+        System.out.println("The color chosen is " +chosenColor.toString());
+        this.setColor(chosenColor);
+
         // set next player, if this is last player, return to player one
         int nextPlayer;
 
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : currentPlayer--;
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
 
         for (int i = 0; i < 4; i++) {
@@ -28,7 +64,7 @@ public class WildDraw4 extends Card {
 
         //skip player
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
             nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }

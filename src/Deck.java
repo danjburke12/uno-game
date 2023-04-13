@@ -26,7 +26,7 @@ public class Deck {
      * Draw Card Method
      * Handles drawing a card, and utlilizing discard pile if neccessary
      * 
-     * @param deck  deck from which to draw
+     * @param pile  deck from which to draw
      * @param index index in pile ArrayList from which to draw
      * @return card drawn
      */

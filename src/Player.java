@@ -14,6 +14,7 @@ public class Player {
     public Player(String name, ArrayList<Card> startingHand, int arrayPosition) {
         this.name = name;
         playerHand = startingHand;
+        this.arrayPosition = arrayPosition;
     }
 
     public String getName() {

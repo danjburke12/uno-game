@@ -14,14 +14,14 @@ public class Draw2 extends Card {
 
     @Override
     public int doAction(int currentPlayer) {
-        // set next player, if this is last player, return to start of order
+        // return next player, if this is last player, return to start of order
         int nextPlayer;
 
         // give next player two cards, then skip
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : currentPlayer--;
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
         }
         for (int i = 0; i < 2; i++) {
             Gameplay.getPlayers()[nextPlayer].getPlayerHand()
@@ -30,9 +30,9 @@ public class Draw2 extends Card {
 
         // skip, move to next player
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : currentPlayer++;
+            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : currentPlayer--;
+            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
         }
 
         // return next player to play
