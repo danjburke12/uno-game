@@ -19,12 +19,12 @@ public class Draw2 extends Card {
 
         // give next player two cards, then skip
         if (Gameplay.getGameDirection()) {
-            nextPlayer = currentPlayer >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+            currentPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
+            currentPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
         }
         for (int i = 0; i < 2; i++) {
-            Gameplay.getPlayers()[nextPlayer].getPlayerHand()
+            Gameplay.getPlayers()[currentPlayer].getPlayerHand()
                     .add(Gameplay.getDeckInstance().drawCard(Gameplay.getDeckInstance().playablePile, 0));
         }
 

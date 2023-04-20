@@ -35,12 +35,14 @@ public class Gameplay {
                 nextCard = deckInstance.discardPile.get(x);
                 x++;
             } while (nextCard.getColor() == Colors.WILD || nextCard.getTitle() == "Skip"
-                    || nextCard.getTitle() == "Reverse" || nextCard.getTitle() == "Draw 2"); // ensures first card is
-                                                                                             // not a wild card
+                    || nextCard.getTitle() == "Reverse" || nextCard.getTitle() == "Draw 2"); // ensures first card is not a wild card
             System.out.println("**The first card is a " + nextCard.toString() + ".**");
 
             // play game
             playRound(nextCard);
+
+            //display winner once game is over
+            gameOver(currentPlayer);
         } else {
             System.out.println("Goodbye");
         }
@@ -123,10 +125,16 @@ public class Gameplay {
                     // run card action and discard card
                     Gameplay.getDeckInstance().getDiscardPile().add(0,
                             players[currentPlayer.getArrayPosition()].getPlayerHand().remove(chosenCardIndex));
-                    // get next player
-                    currentPlayer = players[Gameplay.getDeckInstance().getDiscardPile().get(0)
-                            .doAction(currentPlayer.getArrayPosition())];
-                    break;
+
+                    //check if this player wins
+                    if (players[currentPlayer.getArrayPosition()].getPlayerHand().size() <= 2) {
+                        hasWinner = true;
+                    }else{
+                        // get next player
+                        currentPlayer = players[Gameplay.getDeckInstance().getDiscardPile().get(0)
+                                .doAction(currentPlayer.getArrayPosition())];
+                        break;
+                    }
 
             }
 
@@ -220,6 +228,22 @@ public class Gameplay {
             // create new player instance
             players[i] = new Player(userInput.next(), tempHand, i);
         }
+    }
+
+    public static void gameOver(Player winningPlayer) {
+        //announce that the game is over
+        System.out.println("********** GAME OVER **********");
+        System.out.println("*****🎉🎉🎉 " +currentPlayer.getName() +" Wins! 🎉🎉🎉*****");
+        //give each player's hand details
+        for (int i = 0; i < mainGame.getPlayerCount(); i++) {
+            if (i != currentPlayer.getArrayPosition()) {    //don't display the winner
+                System.out.println("** " +players[i].getName() +" had " +(players[i].getPlayerHand().size()-2) +" cards left over. **");
+            }
+        }
+
+        System.out.println("🥳 Congratulations " +currentPlayer.getName() +"! Thanks for playing, we hope you had fun!");
+        System.out.println("To continue playing, please run the program again.");
+
     }
 
     /**
