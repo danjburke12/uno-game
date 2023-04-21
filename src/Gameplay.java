@@ -36,7 +36,7 @@ public class Gameplay {
                 x++;
             } while (nextCard.getColor() == Colors.WILD || nextCard.getTitle() == "Skip"
                     || nextCard.getTitle() == "Reverse" || nextCard.getTitle() == "Draw 2"); // ensures first card is not a wild card
-            System.out.println("**The first card is a " + nextCard.toString() + ".**");
+            System.out.println("**The first card is a " + nextCard.toString() + "**");
 
             // play game
             playRound(nextCard);
@@ -55,11 +55,12 @@ public class Gameplay {
             getBorderValues(currentPlayer);
             // display cards that can be played
 
-            if (nextCard.getColor().toString().contains("Wild")) {
-                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must match " +nextCard.toString() +" ]: ");
-            }else{
-                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must match " +nextCard.toString() +" ]: ");
+            if (nextCard.getTitle().contains("Wild")) {
+                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must be " +nextCard.getColor().toString() +" ]: ");
+            } else {
+                System.out.println(currentPlayer.getName() + " Please pick a card that matches [ " + nextCard.toString() + " ].");
             }
+
             for (int c = 0; c < highestPossibleIndex; c++) {
                 // display card
                 System.out.print("* [" + c + "] " + currentPlayer.getPlayerHand().get(c).toString() +" ");
@@ -80,7 +81,7 @@ public class Gameplay {
                     // if matches and can be played
                     case COMPATABLE:
                         tempCard = players[currentPlayer.getArrayPosition()].getPlayerHand().get(chosenCardIndex); //checks if card is draw, if it is, don't change nextCard
-                        if (tempCard.getTitle() != "DRAW A CARD") {
+                        if (tempCard.getTitle() != "DRAW A CARD" && tempCard.getTitle() != "Forgot 'UNO'") {
                             nextCard = tempCard;
                         }
                         System.out.println("**" + currentPlayer.getName() + " chose " + tempCard.toString() + ".**");
@@ -113,11 +114,11 @@ public class Gameplay {
             switch (tempCard.getTitle()) {
                 case "Forgot 'UNO'":
                     // run process without discarding
-                    currentPlayer = players[nextCard.doAction(currentPlayer.getArrayPosition())];
+                    currentPlayer = players[tempCard.doAction(currentPlayer.getArrayPosition())];
                     break;
 
                 case "DRAW A CARD":
-                    // add replacement Draw Card
+                    // run process witthout discarding
                     currentPlayer = players[tempCard.doAction(currentPlayer.getArrayPosition())];
                     break;
 
@@ -133,13 +134,17 @@ public class Gameplay {
                         // get next player
                         currentPlayer = players[Gameplay.getDeckInstance().getDiscardPile().get(0)
                                 .doAction(currentPlayer.getArrayPosition())];
+
+                        //set any wild card back to WILD
+                        Card firstIndex = Gameplay.getDeckInstance().getDiscardPile().get(1);
+                        if (firstIndex.getTitle().contains("Wild")) {
+                            firstIndex.setColor(Colors.WILD);
+                        }
                         break;
                     }
 
             }
-
         }
-
     }
 
     /**
