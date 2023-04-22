@@ -36,7 +36,7 @@ public class Gameplay {
                 x++;
             } while (nextCard.getColor() == Colors.WILD || nextCard.getTitle() == "Skip"
                     || nextCard.getTitle() == "Reverse" || nextCard.getTitle() == "Draw 2"); // ensures first card is not a wild card
-            System.out.println("**The first card is a " + nextCard.toString() + "**");
+            System.out.println("**The first card is a " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET +"**");
 
             // play game
             playRound(nextCard);
@@ -56,14 +56,14 @@ public class Gameplay {
             // display cards that can be played
 
             if (nextCard.getTitle().contains("Wild")) {
-                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must be " +nextCard.getColor().toString() +" ]: ");
+                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must be " +nextCard.getColor().getTextColor() +nextCard.getColor().toString() +TerminalColors.ANSI_RESET +" ]: ");
             } else {
-                System.out.println(currentPlayer.getName() + " Please pick a card that matches [ " + nextCard.toString() + " ].");
+                System.out.println(currentPlayer.getName() + ", please pick a card that matches [ " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET + " ].");
             }
 
             for (int c = 0; c < highestPossibleIndex; c++) {
                 // display card
-                System.out.print("* [" + c + "] " + currentPlayer.getPlayerHand().get(c).toString() +" ");
+                System.out.print("[" + c + "] " +currentPlayer.getPlayerHand().get(c).getColor().getTextColor() + currentPlayer.getPlayerHand().get(c).toString() +TerminalColors.ANSI_RESET  +" ");
             }
 
             // return line
@@ -83,19 +83,24 @@ public class Gameplay {
                         tempCard = players[currentPlayer.getArrayPosition()].getPlayerHand().get(chosenCardIndex); //checks if card is draw, if it is, don't change nextCard
                         if (tempCard.getTitle() != "DRAW A CARD" && tempCard.getTitle() != "Forgot 'UNO'") {
                             nextCard = tempCard;
+                            //if card chosen is not draw 1 or uno violation
+                            System.out.println("**" + currentPlayer.getName() + " chose " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET + ".**");
+                        }else{
+                            //if card chosen is draw one or uno violation
+                            System.out.println("**" + currentPlayer.getName() + " chose " +tempCard.getColor().getTextColor() + tempCard.toString() +TerminalColors.ANSI_RESET + ".**");
                         }
-                        System.out.println("**" + currentPlayer.getName() + " chose " + tempCard.toString() + ".**");
+                        
                         go = false;
                         break;
 
                     // if card cannot be played (doesn't match in color/title etc)
                     case VALIDINPUT:
                         System.out.println("That card cannot be played.");
-                        if (nextCard.getColor() == Colors.WILD) {
-                            System.out.println("Please pick a card that is " + nextCard.getColor().toString() + ".");
+                        if (nextCard.getTitle().contains("Wild")) {
+                            System.out.println("Please pick a card that is " +nextCard.getColor().getTextColor() + nextCard.getColor().toString() +TerminalColors.ANSI_RESET + ".");
                         } else {
                             System.out.println("Please pick a card that is either a " + nextCard.getTitle()
-                                + " or is a " + nextCard.getColor().toString() + ".");
+                                + " or is a " +nextCard.getColor().getTextColor() +nextCard.getColor().toString() +TerminalColors.ANSI_RESET + ".");
                         }
                         go = true;
                         break;

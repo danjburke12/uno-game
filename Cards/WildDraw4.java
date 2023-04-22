@@ -1,8 +1,6 @@
 package Cards;
-import java.util.Scanner;
 
 import java.util.Scanner;
-
 import src.*;
 
 public class WildDraw4 extends Card {
@@ -18,7 +16,7 @@ public class WildDraw4 extends Card {
     public int doAction(int currentPlayer) {
         Scanner sc = new Scanner(System.in);
         //get new color
-        System.out.println("What color would you like: [1] Red, [2] Yellow, [3] Green, [4] Blue");
+        System.out.println("What color would you like: " +TerminalColors.ANSI_RED +"[1] Red, " +TerminalColors.ANSI_YELLOW +"[2] Yellow, " +TerminalColors.ANSI_GREEN +"[3] Green, " +TerminalColors.ANSI_BLUE +"[4] Blue" +TerminalColors.ANSI_RESET);
         int userChoice;
         do {
             System.out.println("Please choose a number (1-4)");
@@ -45,7 +43,7 @@ public class WildDraw4 extends Card {
         }
 
         //display color
-        System.out.println("The color chosen is " +chosenColor.toString());
+        System.out.println("The color chosen is " +chosenColor.getTextColor() +chosenColor.toString() +TerminalColors.ANSI_RESET);
         this.setColor(chosenColor);
 
         // set next player, if this is last player, return to player one
