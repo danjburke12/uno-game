@@ -1,0 +1,11 @@
+****************
+Welcome to UNO! Here are the rules:
+*Every player starts with seven cards. 
+*There are two piles: a draw pile and a discard pile.
+*Your goal is to get rid of all your cards by playing one card at a time in the discard pile. 
+*You can play a card if it matches the previously played card in either color, number, or action.
+*When you are at one card left, shout "UNO!\n*If you forget and another player catches you, you must draw a card.
+*(To do this, the next player will select *[0] 'UNO' Violation*.)
+****************
+Do you accept these rules?
+Type any key (+ enter) to continue or 'QUIT' to exit the game
