@@ -2,6 +2,9 @@ package src;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.net.SocketTimeoutException;
 
 import Cards.*;
 
@@ -36,7 +39,7 @@ public class Gameplay {
                 x++;
             } while (nextCard.getColor() == Colors.WILD || nextCard.getTitle() == "Skip"
                     || nextCard.getTitle() == "Reverse" || nextCard.getTitle() == "Draw 2"); // ensures first card is not a wild card
-            System.out.println("**The first card is a " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET +"**");
+            System.out.println("**The first card is a " +nextCard.getColor().getTextColor() + nextCard.toString() +Colors.getAnsiReset() +"**");
 
             // play game
             playRound(nextCard);
@@ -56,14 +59,14 @@ public class Gameplay {
             // display cards that can be played
 
             if (nextCard.getTitle().contains("Wild")) {
-                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must be " +nextCard.getColor().getTextColor() +nextCard.getColor().toString() +TerminalColors.ANSI_RESET +" ]: ");
+                System.out.println("" + currentPlayer.getName() + ", please pick the number of a card to play [ must be " +nextCard.getColor().getTextColor() +nextCard.getColor().toString() +Colors.getAnsiReset() +" ]: ");
             } else {
-                System.out.println(currentPlayer.getName() + ", please pick a card that matches [ " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET + " ].");
+                System.out.println(currentPlayer.getName() + ", please pick a card that matches " +nextCard.getColor().getTextColor() + nextCard.toString() +Colors.getAnsiReset() + ".");
             }
 
             for (int c = 0; c < highestPossibleIndex; c++) {
                 // display card
-                System.out.print("[" + c + "] " +currentPlayer.getPlayerHand().get(c).getColor().getTextColor() + currentPlayer.getPlayerHand().get(c).toString() +TerminalColors.ANSI_RESET  +" ");
+                System.out.print("[" + c + "] " +currentPlayer.getPlayerHand().get(c).getColor().getTextColor() + currentPlayer.getPlayerHand().get(c).toString() +Colors.getAnsiReset()  +" ");
             }
 
             // return line
@@ -84,10 +87,10 @@ public class Gameplay {
                         if (tempCard.getTitle() != "DRAW A CARD" && tempCard.getTitle() != "Forgot 'UNO'") {
                             nextCard = tempCard;
                             //if card chosen is not draw 1 or uno violation
-                            System.out.println("**" + currentPlayer.getName() + " chose " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET + ".**");
+                            System.out.println("**" + currentPlayer.getName() + " chose " +nextCard.getColor().getTextColor() + nextCard.toString() +Colors.getAnsiReset() + ".**");
                         }else{
                             //if card chosen is draw one or uno violation
-                            System.out.println("**" + currentPlayer.getName() + " chose " +tempCard.getColor().getTextColor() + tempCard.toString() +TerminalColors.ANSI_RESET + ".**");
+                            System.out.println("**" + currentPlayer.getName() + " chose " +tempCard.getColor().getTextColor() + tempCard.toString() +Colors.getAnsiReset() + ".**");
                         }
                         
                         go = false;
@@ -97,10 +100,10 @@ public class Gameplay {
                     case VALIDINPUT:
                         System.out.println("That card cannot be played.");
                         if (nextCard.getTitle().contains("Wild")) {
-                            System.out.println("Please pick a card that is " +nextCard.getColor().getTextColor() + nextCard.getColor().toString() +TerminalColors.ANSI_RESET + ".");
+                            System.out.println("Please pick a card that is " +nextCard.getColor().getTextColor() + nextCard.getColor().toString() +Colors.getAnsiReset() + ".");
                         } else {
                             System.out.println("Please pick a card that is either a " + nextCard.getTitle()
-                                + " or is a " +nextCard.getColor().getTextColor() +nextCard.getColor().toString() +TerminalColors.ANSI_RESET + ".");
+                                + " or is a " +nextCard.getColor().getTextColor() +nextCard.getColor().toString() +Colors.getAnsiReset() + ".");
                         }
                         go = true;
                         break;
@@ -159,23 +162,37 @@ public class Gameplay {
      */
     public static boolean displayRules() {
         // display rules
-        System.out.println("****************");
-        System.out.println("Welcome to UNO! Here are the rules:");
-        System.out.println(
-                "*Every player starts with seven cards. \n*There are two piles: a draw pile and a discard pile.");
-        System.out.println(
-                "*Your goal is to get rid of all your cards by playing one card at a time in the discard pile. \n*You can play a card if it matches the previously played card in either color, number, or action.");
-        System.out.println(
-                "*When you are at one card left, shout \"UNO!\" \n*If you forget and another player catches you, you must draw a card.");
-        System.out.println("*(To do this, the next player will select *[0] 'UNO' Violation*.)");
-        // create Scanner object
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("****************");
-        // ask user if they accept rules
-        System.out.println("Do you accept these rules?");
-        System.out.println("Type any key (+ enter) to continue or 'QUIT' to exit the game");
+        String rules = ""; //rules to display, read from file
+
+
+        try {
+            File rulesFile = new File("Rules.txt");  //file to containt rules to read from
+            FileWriter fileWriter = new FileWriter(rulesFile); //FileWriter to add rules to file
+            Scanner fileReader = new Scanner(rulesFile); //scanner to read from file
+
+            //write rules to file
+            fileWriter.write(Game.getRulePrintout());
+            fileWriter.close();
+
+            //read rules from file
+            while (fileReader.hasNextLine()) {
+                rules += fileReader.nextLine();
+                rules += "\n";
+            }
+
+            //close reader
+            fileReader.close();
+
+        }catch (IOException e) {
+            System.out.println("There was an error in writing/reading the file.");
+            e.printStackTrace();
+        }
+
+        //print rules
+        System.out.print(rules);
 
         // check for user input
+        Scanner userInput = new Scanner(System.in);
         String input = userInput.next();
         if (input.equals("QUIT")) {
             return false;
