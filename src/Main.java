@@ -3,12 +3,10 @@ package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
-import java.lang.reflect.Field;
-import java.net.SocketTimeoutException;
 
 import Cards.*;
 
-public class Gameplay {
+public class Main {
     static Game mainGame = new Game();
     static Player[] players;
     static int[] playerScores;
@@ -132,7 +130,7 @@ public class Gameplay {
 
                 default:
                     // run card action and discard card
-                    Gameplay.getDeckInstance().getDiscardPile().add(0,
+                    Main.getDeckInstance().getDiscardPile().add(0,
                             players[currentPlayer.getArrayPosition()].getPlayerHand().remove(chosenCardIndex));
 
                     //check if this player wins
@@ -140,11 +138,11 @@ public class Gameplay {
                         hasWinner = true;
                     }else{
                         // get next player
-                        currentPlayer = players[Gameplay.getDeckInstance().getDiscardPile().get(0)
+                        currentPlayer = players[Main.getDeckInstance().getDiscardPile().get(0)
                                 .doAction(currentPlayer.getArrayPosition())];
 
                         //set any wild card back to WILD
-                        Card firstIndex = Gameplay.getDeckInstance().getDiscardPile().get(1);
+                        Card firstIndex = Main.getDeckInstance().getDiscardPile().get(1);
                         if (firstIndex.getTitle().contains("Wild")) {
                             firstIndex.setColor(Colors.WILD);
                         }

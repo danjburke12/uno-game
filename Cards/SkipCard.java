@@ -23,16 +23,16 @@ public class SkipCard extends Card {
     public int doAction(int currentPlayer) {
         // set next player, if this is last player, return to player one
         int nextPlayer;
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : currentPlayer--;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount() - 1 : currentPlayer--;
         }
         //skip player
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
 
         // return next player to play

@@ -17,10 +17,10 @@ public class NumberCard extends Card {
         // return next player, if this is last player, return to start of order
         int nextPlayer;
 
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
         return nextPlayer;
     }
