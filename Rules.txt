@@ -4,6 +4,8 @@ Welcome to UNO! Here are the rules:
 *There are two piles: a draw pile and a discard pile.
 *Your goal is to get rid of all your cards by playing one card at a time in the discard pile. 
 *You can play a card if it matches the previously played card in either color, number, or action.
+*Your cards will display in an external window, and in the terminal, with the card to match frozen on the right
+*To play a card, enter the number next to it in the terminal
 *When you are at one card left, shout "UNO!\n*If you forget and another player catches you, you must draw a card.
 *(To do this, the next player will select *[0] 'UNO' Violation*.)
 ****************
