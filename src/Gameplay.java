@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -90,10 +91,6 @@ public class Gameplay {
                 pe.DisplayCurrentPlayer(currentPlayer.getPlayerHand().get(c).toString(), c);
                 }
             }
-            
-            // perception engine
-            //pe.DisplayCurrentPlayer(currentPlayer);
-
 
             // return line
             System.out.println();
@@ -195,8 +192,8 @@ public class Gameplay {
         System.out.println(
                 "*Your goal is to get rid of all your cards by playing one card at a time in the discard pile. \n*You can play a card if it matches the previously played card in either color, number, or action.");
         System.out.println(
-                "*When you are at one card left, shout \"UNO!\" \n*If you forget and another player catches you, you must draw a card.");
-        System.out.println("*(To do this, the next player will select *[0] 'UNO' Violation*.)");
+                "*When you are at one card left, shout " + Colors.getAnsiPurple() + "\"UNO!\" " + Colors.getAnsiReset() + "\n*If you forget and another player catches you, you must draw a card.");
+        System.out.println("*(To do this, the next player will select " + Colors.WILD.getTextColor() + "*[0] 'UNO' Violation*.)" + Colors.getAnsiReset());
         // create Scanner object
         Scanner userInput = new Scanner(System.in);
         System.out.println("****************");
