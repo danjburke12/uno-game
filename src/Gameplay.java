@@ -3,6 +3,15 @@ package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
 import Cards.*;
 
 public class Gameplay {
@@ -17,8 +26,14 @@ public class Gameplay {
     static Card nextCard;
     static Card tempCard;
 
+    // display visual cards
+    static PerceptionEngine pe = new PerceptionEngine();
+
+
     public static void main(String[] args) {
+
         // display gameplay and get user confirmation
+
         if (displayRules()) {
             // System.out.println("Happy playing!");
             // run game setup
@@ -49,6 +64,8 @@ public class Gameplay {
     }
 
     public static void playRound(Card nextCard) {
+        
+
         // loop through each player
         currentPlayer = players[0];
         while (!hasWinner) {
@@ -61,10 +78,22 @@ public class Gameplay {
                 System.out.println(currentPlayer.getName() + ", please pick a card that matches [ " +nextCard.getColor().getTextColor() + nextCard.toString() +TerminalColors.ANSI_RESET + " ].");
             }
 
+            // Perception Engine
+            pe.DisplayCard(nextCard);
+            pe.DisplayCurrentPlayerReset();
             for (int c = 0; c < highestPossibleIndex; c++) {
                 // display card
                 System.out.print("[" + c + "] " +currentPlayer.getPlayerHand().get(c).getColor().getTextColor() + currentPlayer.getPlayerHand().get(c).toString() +TerminalColors.ANSI_RESET  +" ");
+                
+                // perception engine
+                if (c > 1) {
+                pe.DisplayCurrentPlayer(currentPlayer.getPlayerHand().get(c).toString(), c);
+                }
             }
+            
+            // perception engine
+            //pe.DisplayCurrentPlayer(currentPlayer);
+
 
             // return line
             System.out.println();
