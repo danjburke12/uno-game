@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.Colors;
-import src.Gameplay;
+import src.Main;
 import src.Player;
 
 public class ForgotUNO extends Card{
@@ -21,10 +21,10 @@ public class ForgotUNO extends Card{
 
         System.out.println("Select which player must draw a card: ");
         //print names for players to choose from
-        for (int i = 0; i < Gameplay.getMainGame().getPlayerCount(); i++) {
+        for (int i = 0; i < Main.getMainGame().getPlayerCount(); i++) {
             if (i != currentPlayer) { 
                 //don't display the winner
-                Player p = Gameplay.getPlayers()[i];
+                Player p = Main.getPlayers()[i];
                 System.out.print("[" +(i+1) +"] " +p.getName() +" ");
                 choosablePlayers.add(p);
             }
@@ -34,16 +34,16 @@ public class ForgotUNO extends Card{
         selection = sc.nextInt(); //get selection
         
         //if option chosen is invalid...
-        while (selection < 1 || selection > (Gameplay.getMainGame().getPlayerCount())) {
-            System.out.println("Invalid option. Please choose a number between 1 - " +Gameplay.getMainGame().getPlayerCount() +": ");
+        while (selection < 1 || selection > (Main.getMainGame().getPlayerCount())) {
+            System.out.println("Invalid option. Please choose a number between 1 - " +Main.getMainGame().getPlayerCount() +": ");
             selection = sc.nextInt();
         }
 
         //add one card to chosen player's deck
-        Player p = Gameplay.getPlayers()[selection-1];
+        Player p = Main.getPlayers()[selection-1];
         System.out.println("DEBUG: Player chosen is " +p.getName());
 
-        Gameplay.getPlayers()[p.getArrayPosition()].getPlayerHand().add(Gameplay.getDeckInstance().drawCard(Gameplay.getDeckInstance().getPlayablePile(), 0));
+        Main.getPlayers()[p.getArrayPosition()].getPlayerHand().add(Main.getDeckInstance().drawCard(Main.getDeckInstance().getPlayablePile(), 0));
         
         //current player stays the same, so they can now play a card
         return currentPlayer;

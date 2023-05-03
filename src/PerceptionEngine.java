@@ -95,7 +95,7 @@ public class PerceptionEngine {
             // concatinate the current application directory with the asset location 
             String folderPath = currentDir.getAbsolutePath() + "//Assets/Cards/";
 
-            // handlers the current card being played.
+            // handler the current card being played.
             String fileName;
             if (nc.contains("Wild")) {
                 fileName = "Wild.png";
@@ -130,7 +130,7 @@ public class PerceptionEngine {
     }
 
     /* ***********************************************
-     *  Dispalys the current players card
+     *  Displays the current players card
      * ***********************************************/
     public void DisplayCurrentPlayer(String currentCard, int idx) {
 

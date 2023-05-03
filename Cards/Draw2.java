@@ -18,21 +18,21 @@ public class Draw2 extends Card {
         int nextPlayer;
 
         // give next player two cards, then skip
-        if (Gameplay.getGameDirection()) {
-            currentPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            currentPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            currentPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
+            currentPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount() - 1 : --currentPlayer;
         }
         for (int i = 0; i < 2; i++) {
-            Gameplay.getPlayers()[currentPlayer].getPlayerHand()
-                    .add(Gameplay.getDeckInstance().drawCard(Gameplay.getDeckInstance().playablePile, 0));
+            Main.getPlayers()[currentPlayer].getPlayerHand()
+                    .add(Main.getDeckInstance().drawCard(Main.getDeckInstance().playablePile, 0));
         }
 
         // skip, move to next player
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount() - 1 : --currentPlayer;
         }
 
         // return next player to play

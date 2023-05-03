@@ -10,14 +10,14 @@ public class Draw1 extends Card {
 
     @Override
     public int doAction(int currentPlayer) {
-        Gameplay.getPlayers()[currentPlayer].getPlayerHand()
-            .add(Gameplay.getDeckInstance().drawCard(Gameplay.getDeckInstance().playablePile, 0));
+        Main.getPlayers()[currentPlayer].getPlayerHand()
+            .add(Main.getDeckInstance().drawCard(Main.getDeckInstance().playablePile, 0));
         // return next player to play
         int nextPlayer;
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         } else {
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount() - 1 : --currentPlayer;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount() - 1 : --currentPlayer;
         }
         return nextPlayer;
     }

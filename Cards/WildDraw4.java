@@ -49,22 +49,22 @@ public class WildDraw4 extends Card {
         // set next player, if this is last player, return to player one
         int nextPlayer;
 
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
 
         for (int i = 0; i < 4; i++) {
-            Gameplay.getPlayers()[nextPlayer].getPlayerHand()
-                    .add(Gameplay.getDeckInstance().drawCard(Gameplay.getDeckInstance().playablePile, 0));
+            Main.getPlayers()[nextPlayer].getPlayerHand()
+                    .add(Main.getDeckInstance().drawCard(Main.getDeckInstance().playablePile, 0));
         }
 
         //skip player
-        if (Gameplay.getGameDirection()) {
-            nextPlayer = (currentPlayer + 1) >= Gameplay.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
+        if (Main.getGameDirection()) {
+            nextPlayer = (currentPlayer + 1) >= Main.getMainGame().getPlayerCount() ? 0 : ++currentPlayer;
         }else{
-            nextPlayer = currentPlayer == 0 ? Gameplay.getMainGame().getPlayerCount()-1 : --currentPlayer;
+            nextPlayer = currentPlayer == 0 ? Main.getMainGame().getPlayerCount()-1 : --currentPlayer;
         }
 
         // return next player to play
